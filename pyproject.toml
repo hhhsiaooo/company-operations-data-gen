@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "company-operation-data-gen"
+version = "0.1.0"
+description = ""
+authors = ["Hailey, Hsiao <hhhsiaooo@github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.2.1"
+pydantic = "^2.10.4"
+pandas = "^2.2.3"
+SQLAlchemy = "^2.0.36"
+requests = "^2.32.3"
+bs4 = "^0.0.2"
+Faker = "^33.1.0"
+pydantic-settings = "^2.7.1"
+psycopg2-binary = "^2.9.10"
+pytest = "^8.3.4"
+unittest = "^0.0"
+PyYAML = "^6.0.2"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+data-gen = "company_operation_data_gen.__main__:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

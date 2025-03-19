@@ -1,0 +1,24 @@
+# Authors:
+#    Hailey, Hsiao 2025
+
+# The systemd service unit file.
+# Put this file in the /etc/systemd/system/ directory.
+#
+#    sudo cp -p support-files/company-operation-data-gen-weekly.service /etc/systemd/system/
+
+
+[Unit]
+Description=Data generation service for product data, executed weekly
+After=company-operation-data-gen-weekly.timer
+
+[Service]
+Type=oneshot
+ExecStart=/srv/company-operation-data-gen/.venv/bin/data-gen weekly
+WorkingDirectory=/srv/company-operation-data-gen
+User=company-operation-data-gen
+Group=company-operation-data-gen
+StandardOutput=append:/var/log/company-operation-data-gen.log
+StandardError=append:/var/log/company-operation-data-gen.log
+
+[Install]
+WantedBy=timers.target

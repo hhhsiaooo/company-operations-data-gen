@@ -1,0 +1,19 @@
+# Authors:
+#    Hailey, Hsiao 2025
+
+# The systemd timer unit file.
+# Put this file in the /etc/systemd/system/ directory.
+#
+#    sudo cp -p support-files/company-operation-data-gen-daily.timer /etc/systemd/system/
+
+
+[Unit]
+Description=Data generation service for customer behavior data and transaction data, executed daily
+
+[Timer]
+Unit=company-operation-data-gen-daily.service
+OnCalendar=*-*-* 06:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

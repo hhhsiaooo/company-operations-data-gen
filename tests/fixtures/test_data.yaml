@@ -1,0 +1,144 @@
+customers:
+  - customer_id: "a001"
+    customer_name: "歐米"
+    gender: "M"
+    birth: "2004-01-15"
+    email: "omi@google.com"
+    phone_number: "049274145"
+    city: "臺中市"
+    registered_at: "2024-11-15"
+  - customer_id: "a002"
+    customer_name: "抖抖"
+    gender: "F"
+    birth: "1999-07-04"
+    email: "dodo@google.com"
+    phone_number: "081932145"
+    city: "基隆市"
+    registered_at: "2024-11-15"
+
+products:
+  - product_id: "p001"
+    product_name: "鮭魚起司丁"
+    brand_name: "ONE"
+    category: "零食"
+    price: 300
+    promotion_price: 250
+    fetched_at: "2024-11-30"
+  - product_id: "p002"
+    product_name: "X型軟Q潔牙骨"
+    brand_name: "DR.Q"
+    category: "潔牙骨"
+    price: 290
+    promotion_price: 250
+    fetched_at: "2024-11-30"
+  - product_id: "p003"
+    product_name: "益生菌"
+    brand_name: "毛孩星球"
+    category: "保健食品"
+    price: null
+    promotion_price: 400
+    fetched_at: "2024-11-30"
+  - product_id: "p004"
+    product_name: "膠原蛋白洗毛精"
+    brand_name: "好味寶寶"
+    category: "清潔用品"
+    price: null
+    promotion_price: 600
+    fetched_at: "2024-11-30"
+  - product_id: "p005"
+    product_name: "干貝凍乾"
+    brand_name: null
+    category: "凍乾"
+    price: 500
+    promotion_price: 300
+    fetched_at: "2024-11-30"
+  - product_id: "p006"
+    product_name: "L寵物用尿布墊30入"
+    brand_name: None
+    category: "尿布墊"
+    price: 150
+    promotion_price: 109
+    fetched_at: "2024-11-30"
+  - product_id: "p007"
+    product_name: "番茄牛肉風味狗飼料2KG"
+    brand_name: "皇室"
+    category: "狗飼料"
+    price: 1600
+    promotion_price: 1199
+    fetched_at: "2024-11-30"
+  - product_id: "p008"
+    product_name: "蔬菜雞肉副食罐10入"
+    brand_name: "莎莎"
+    category: "狗罐頭"
+    price: 600
+    promotion_price: 490
+    fetched_at: "2024-11-30"
+
+promotion_date:
+  - day_of_week: 0
+    promotion_type: "滿額折扣"
+    published_at: "2024-11-15"
+  - day_of_week: 1
+    promotion_type: "多件優惠"
+    published_at: "2024-11-15"
+  - day_of_week: 5
+    promotion_type: "免運滿額贈"
+    published_at: "2024-11-15"
+
+promotion:
+  - promotion_id: 1
+    promotion_name: "滿1000打9折"
+    promotion_type: "滿額折扣"
+    cash_threshold: 1000
+    quantity_threshold: null
+    discount_rate: 0.1
+    gift: null
+    published_at: "2024-11-15"
+  - promotion_id: 2
+    promotion_name: "滿2000打8折"
+    promotion_type: "滿額折扣"
+    cash_threshold: 2000
+    quantity_threshold: null
+    discount_rate: 0.2
+    gift: null
+    published_at: "2024-11-15"
+  - promotion_id: 3
+    promotion_name: "滿1000送零食"
+    promotion_type: "免運滿額贈"
+    cash_threshold: 1000
+    quantity_threshold: null
+    discount_rate: null
+    gift: "零食"
+    published_at: "2024-11-15"
+  - promotion_id: 4
+    promotion_name: "滿2000送毛毯"
+    promotion_type: "免運滿額贈"
+    cash_threshold: 2000
+    quantity_threshold: null
+    discount_rate: null
+    gift: "毛毯"
+    published_at: "2024-11-15"
+  - promotion_id: 5
+    promotion_name: "滿5件打9折"
+    promotion_type: "多件優惠"
+    cash_threshold: null
+    quantity_threshold: 5
+    discount_rate: 0.1
+    gift: null
+    published_at: "2024-11-15"
+  - promotion_id: 6
+    promotion_name: "滿8件打8件"
+    promotion_type: "多件優惠"
+    cash_threshold: null
+    quantity_threshold: 8
+    discount_rate: 0.2
+    gift: null
+    published_at: "2024-11-15"
+  - promotion_id: 7
+    promotion_name: "滿10件打7件"
+    promotion_type: "多件優惠"
+    cash_threshold: null
+    quantity_threshold: 10
+    discount_rate: 0.3
+    gift: null
+    published_at: "2024-11-15"
