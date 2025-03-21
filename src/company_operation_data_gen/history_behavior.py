@@ -37,9 +37,9 @@ class CustomerActivityHistory:
         date_range = [start + timedelta(days=i) for i in range((end - start).days + 1)]
 
         for date in date_range:
-            weekday = date.weekday()
+            weekday = (date - timedelta(days=1)).weekday()
             promotion_constants: PromotionConstants = (
-                promotion_choose.get_promotion_constants(today_weekday=weekday)
+                promotion_choose.get_promotion_constants(yesterday_weekday=weekday)
             )
 
             num_behavior: int = self.__gen_random_count(
@@ -321,4 +321,4 @@ class CustomerActivityHistory:
 
 
 activity_gen: CustomerActivityHistory = CustomerActivityHistory()
-activity_gen.generate(start_date="2025-01-01", end_date="2025-01-05")
+activity_gen.generate(start_date="2025-03-17", end_date="2025-03-17")

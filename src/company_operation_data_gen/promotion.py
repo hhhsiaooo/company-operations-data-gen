@@ -11,7 +11,7 @@ and the corresponding constants, including the number of customer behavior data 
 """
 
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Tuple
 
 import sqlalchemy as sa
@@ -26,7 +26,7 @@ class PromotionChoose:
 
     def get_promotion_constants(
         self,
-        today_weekday: int = None,
+        yesterday_weekday: int = None,
         session: sa.orm.Session = None,
     ) -> PromotionConstants:
         """Returns the promotion data and the corresponding constants.
@@ -39,18 +39,20 @@ class PromotionChoose:
             - The constants based on the different promotion type.
         """
 
-        today_weekday = (
-            today_weekday if today_weekday is not None else datetime.now().weekday()
+        yesterday_weekday = (
+            yesterday_weekday
+            if yesterday_weekday is not None
+            else (datetime.now() - timedelta(days=1)).weekday()
         )
-        result = self.__get_today_promotion(
-            today_weekday=today_weekday, session=session
+        result = self.__get_yesterday_promotion(
+            yesterday_weekday=yesterday_weekday, session=session
         )
-        today_promotion_type: str = result[0]
+        yesterday_promotion_type: str = result[0]
         latest_promotion_content: PromotionData = result[1]
 
-        if today_promotion_type == "免運滿額贈":
+        if yesterday_promotion_type == "免運滿額贈":
             return PromotionConstants(
-                promotion_type=today_promotion_type,
+                promotion_type=yesterday_promotion_type,
                 promotion_detail=latest_promotion_content,
                 behavior_avg=BehaviorCountConstants.GIFT_BEHAVIOR_AVG,
                 behavior_sigma=BehaviorCountConstants.GIFT_BEHAVIOR_SIGMA,
@@ -61,9 +63,9 @@ class PromotionChoose:
                 quantity_min=QuantityCountConstants.GIFT_QUANTITY_MIN,
                 quantity_max=QuantityCountConstants.GIFT_QUANTITY_MAX,
             )
-        elif today_promotion_type == "滿額折扣":
+        elif yesterday_promotion_type == "滿額折扣":
             return PromotionConstants(
-                promotion_type=today_promotion_type,
+                promotion_type=yesterday_promotion_type,
                 promotion_detail=latest_promotion_content,
                 behavior_avg=BehaviorCountConstants.DISCOUNT_BEHAVIOR_AVG,
                 behavior_sigma=BehaviorCountConstants.DISCOUNT_BEHAVIOR_SIGMA,
@@ -74,9 +76,9 @@ class PromotionChoose:
                 quantity_min=QuantityCountConstants.DISCOUNT_QUANTITY_MIN,
                 quantity_max=QuantityCountConstants.DISCOUNT_QUANTITY_MAX,
             )
-        elif today_promotion_type == "多件優惠":
+        elif yesterday_promotion_type == "多件優惠":
             return PromotionConstants(
-                promotion_type=today_promotion_type,
+                promotion_type=yesterday_promotion_type,
                 promotion_detail=latest_promotion_content,
                 behavior_avg=BehaviorCountConstants.MULTI_BEHAVIOR_AVG,
                 behavior_sigma=BehaviorCountConstants.MULTI_BEHAVIOR_SIGMA,
@@ -88,8 +90,8 @@ class PromotionChoose:
                 quantity_max=QuantityCountConstants.MULTI_QUANTITY_MAX,
             )
 
-    def __get_today_promotion(
-        self, today_weekday: int, session: sa.orm.Session
+    def __get_yesterday_promotion(
+        self, yesterday_weekday: int, session: sa.orm.Session
     ) -> Tuple[str, PromotionData]:
         """Returns the promotion type based on the weekday, then query the latest promotion data."""
 
@@ -99,21 +101,21 @@ class PromotionChoose:
             db = ds.get_db()
 
         with db:
-            today_promotion_type = (
+            yesterday_promotion_type = (
                 db.query(PromotionDateSource.promotion_type)
-                .filter(PromotionDateSource.day_of_week == today_weekday)
+                .filter(PromotionDateSource.day_of_week == yesterday_weekday)
                 .order_by(PromotionDateSource.published_at.desc())
                 .first()
             )
-            today_promotion_type = (
-                today_promotion_type[0] if today_promotion_type else None
+            yesterday_promotion_type = (
+                yesterday_promotion_type[0] if yesterday_promotion_type else None
             )
             latest_promotion_date = db.scalar(sa.func.max(PromotionSource.published_at))
 
             latest_promotion_content = (
                 db.query(PromotionSource)
                 .filter(
-                    PromotionSource.promotion_type == today_promotion_type,
+                    PromotionSource.promotion_type == yesterday_promotion_type,
                     PromotionSource.published_at == latest_promotion_date,
                 )
                 .all()
@@ -123,7 +125,9 @@ class PromotionChoose:
                 for promotion in latest_promotion_content
             ]
 
-        return today_promotion_type, PromotionData(root=latest_promotion_content_models)
+        return yesterday_promotion_type, PromotionData(
+            root=latest_promotion_content_models
+        )
 
 
 promotion_choose: PromotionChoose = PromotionChoose()

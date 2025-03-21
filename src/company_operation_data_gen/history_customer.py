@@ -84,5 +84,5 @@ def history_product(scrape_date: str) -> None:
         db.commit()
 
 
-history_customer(5, 15, "2024-12-31", "2025-01-05")
+history_customer(5, 15, "2025-03-15", "2025-03-18")
 history_product("2025-01-01")
